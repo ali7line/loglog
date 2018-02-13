@@ -1,0 +1,2 @@
+# loglog
+Another Learning Log
