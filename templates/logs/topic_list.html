@@ -1,0 +1,16 @@
+{% extends parent_template|default:"logs/base_logs.html" %}
+
+{% block title %}
+{{ block.super }} -- Topic List
+{% endblock title %}
+
+{% block content %}
+<h3>Topics:</h3>
+<ul>
+{% for topic in topic_list %}
+<li> <a href=""> {{ topic.name }} </a> </li>
+{% empty %}
+<li> <em> No Topic Found! </em> </li>
+{% endfor %}
+</ul>
+{% endblock content %}
