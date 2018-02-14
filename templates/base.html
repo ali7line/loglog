@@ -16,6 +16,12 @@ src="http://html5shiv.googlecode.com/svn/trunk/html5.js">
 </script><![endif]-->
 </head>
 <body>
+    <nav>
+    <ul>
+    <li><a href="{% url 'logs:type_list' %}"> Types </a></li>
+    <li><a href="{% url 'logs:topic_list' %}"> Topics </a></li>
+    </ul>
+    </nav>
     {% block content %}
     <p>
         <em> if you are seeing this, there is something wrong! </em>

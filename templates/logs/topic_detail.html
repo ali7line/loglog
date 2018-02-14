@@ -1,0 +1,23 @@
+{% extends parent_template|default:"logs/base_logs.html" %}
+
+{% block title %}
+{{ block.super }} -- {{ topic.name }}
+{% endblock title %}
+
+{% block content %}
+<h3>{{ topic.name }} > <a href="{{ topic.topic_type.get_absolute_url }}"> {{ topic.topic_type }} </a></h3>
+<ul>
+    {% for entry in entries %}
+    <li> 
+        <p>
+        <time datetime="{{ entry.date_added|date:'Y-M-d' }}">{{ entry.date_added|date:'Y-M-d' }}</time>
+        </p>
+        <p>
+        {{ entry.text}}
+        </p>
+    </li>
+    {% empty %}
+    <li> <em> No Entry Found! </em> </li>
+    {% endfor %}
+</ul>
+{% endblock content %}
