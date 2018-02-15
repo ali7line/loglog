@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
 
 from .models import Topic, Type
+from .forms import TopicForm
 
 
 class TopicList(View):
@@ -21,6 +22,22 @@ class TopicDetail(View):
         entries = topic.entry_set.all()
         context = {'topic': topic, 'entries': entries}
         return render(request, self.template_name, context)
+
+
+class TopicCreate(View):
+    template_name = 'logs/topic_create.html'
+    form_class = TopicForm
+
+    def get(self, request):
+        return render(request, self.template_name, {'form': self.form_class()})
+
+    def post(self, request):
+        bound_form = self.form_class(request.POST)
+        if bound_form.is_valid():
+            new_post = bound_form.save()
+            return redirect(new_post)
+        else:
+            return render(request, self.template_name, {'form': bound_form})
 
 
 class TypeList(View):

@@ -1,0 +1,17 @@
+{% extends parent_template|default:"logs/base_logs.html" %}
+
+{% block title %}
+{{ block.super }} -- Add Topic
+{% endblock title %}
+
+
+{% block content %}
+<h3>Add New Topic:</h3>
+<form action=" {% url 'logs:topic_create' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">
+    Add Topic
+    </button>
+</form>
+{% endblock content %}

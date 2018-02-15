@@ -6,9 +6,10 @@
 
 {% block content %}
     <h3>Topics:</h3>
+    <a href="{% url 'logs:topic_create' %}"> + Add Topic </a>
     <ul>
     {% for topic in topic_list %}
-    <li> <a href="{{ topic.get_absolute_url }}"> {{ topic.name }} </a> </li>
+    <li> <a href="{{ topic.get_absolute_url }}"> {{ topic.name }} </a> &nbsp; &nbsp; {{ topic.get_status_display }}</li>
     {% empty %}
     <li> <em> No Topic Found! </em> </li>
     {% endfor %}

@@ -6,6 +6,9 @@
 
 {% block content %}
 <h3>{{ topic.name }} > <a href="{{ topic.topic_type.get_absolute_url }}"> {{ topic.topic_type }} </a></h3>
+<p>
+{{ topic.get_status_display }}
+</p>
 <ul>
     {% for entry in entries %}
     <li> 

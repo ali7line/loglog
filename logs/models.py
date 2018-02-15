@@ -17,9 +17,22 @@ class Type(models.Model):
 
 
 class Topic(models.Model):
+    CANCELED = -1
+    IDEA = 0
+    PENDING = 1
+    IN_PROGRESS = 2
+    DONE = 3
+    STATUS_CHOICES = (
+            (CANCELED, 'canceled'),
+            (IDEA, 'idea'),
+            (PENDING, 'pending'),
+            (IN_PROGRESS, 'in progress'),
+            (DONE, 'done'),
+            )
     name = models.CharField(max_length=31, unique=True)
     slug = models.SlugField(max_length=31, unique=True)
     date_added = models.DateTimeField()
+    status = models.SmallIntegerField(choices=STATUS_CHOICES, default=0)
     topic_type = models.ForeignKey(Type, on_delete=models.CASCADE)
 
     class Meta:
