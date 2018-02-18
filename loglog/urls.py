@@ -1,9 +1,13 @@
 from django.contrib import admin
 from django.urls import path, include
 
-import logs.urls as logs_url
+from logs.urls import (
+        topic as topic_url,
+        type as type_url,
+        )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(logs_url, namespace='logs'))
+    path('topic/', include(topic_url)),
+    path('type/', include(type_url)),
 ]

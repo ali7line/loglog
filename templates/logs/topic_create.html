@@ -7,7 +7,7 @@
 
 {% block content %}
 <h3>Add New Topic:</h3>
-<form action=" {% url 'logs:topic_create' %}" method="POST">
+<form action=" {% url 'logs_topic_create' %}" method="POST">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">

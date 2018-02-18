@@ -13,7 +13,7 @@ class Type(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('logs:type_detail', kwargs={'type_slug': self.slug})
+        return reverse('logs_type_detail', kwargs={'type_slug': self.slug})
 
 
 class Topic(models.Model):
@@ -42,7 +42,7 @@ class Topic(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('logs:topic_detail', kwargs={'topic_slug': self.slug})
+        return reverse('logs_topic_detail', kwargs={'topic_slug': self.slug})
 
 
 class Entry(models.Model):
