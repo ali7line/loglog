@@ -9,6 +9,9 @@
 <p>
 {{ topic.get_status_display }}
 </p>
+<p>
+<a href="{% url 'logs_topic_add_entry' topic.slug %}"> + Add Entry </a>
+</p>
 <ul>
     {% for entry in entries %}
     <li> 

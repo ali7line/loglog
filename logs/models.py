@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.db import models
 
@@ -62,3 +63,6 @@ class Entry(models.Model):
             short_text = self.text[:50] + '...'
 
         return "{}: {}".format(self.topic, short_text)
+
+    def get_absolute_url(self):
+        return reverse('logs_topic_detail', kwargs={'topic_slug': self.topic.slug})

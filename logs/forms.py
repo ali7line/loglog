@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from .models import Topic, Type
+from .models import Topic, Type, Entry
 
 
 class TopicForm(forms.ModelForm):
@@ -14,6 +14,12 @@ class TopicForm(forms.ModelForm):
         if new_slug == 'create':
             raise ValidationError('Slug may not be create')
         return new_slug
+
+
+class TopicAddEntryForm(forms.ModelForm):
+    class Meta:
+        model = Entry
+        fields = '__all__'
 
 
 class TypeForm(forms.ModelForm):
