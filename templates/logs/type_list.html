@@ -6,6 +6,7 @@
 
 {% block content %}
 <h3>Types:</h3>
+<a href="{% url 'logs_type_create' %}"> + Add Type </a>
 <ul>
     {% for type in type_list %}
     <li><a href="{{ type.get_absolute_url }}"> {{ type.name }} </a></li>

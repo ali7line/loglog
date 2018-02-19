@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
 
 from .models import Topic, Type
-from .forms import TopicForm
+from .forms import TopicForm, TypeForm
 
 
 class TopicList(View):
@@ -34,8 +34,8 @@ class TopicCreate(View):
     def post(self, request):
         bound_form = self.form_class(request.POST)
         if bound_form.is_valid():
-            new_post = bound_form.save()
-            return redirect(new_post)
+            new_topic = bound_form.save()
+            return redirect(new_topic)
         else:
             return render(request, self.template_name, {'form': bound_form})
 
@@ -58,3 +58,19 @@ class TypeDetail(View):
         number = len(topics)
         context = {'type': type_, 'topics': topics, 'number': number}
         return render(request, self.template_name, context)
+
+
+class TypeCreate(View):
+    template_name = 'logs/type_create.html'
+    form_model = TypeForm
+
+    def get(self, request):
+        return render(request, self.template_name, {'form': self.form_model()})
+
+    def post(self, request):
+        bounded_form = self.form_model(request.POST)
+        if bounded_form.is_valid():
+            new_type = bounded_form.save()
+            return redirect(new_type)
+        else:
+            return render(request, 'logs/type_create.html', {'form': bounded_form})

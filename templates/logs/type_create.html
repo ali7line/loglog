@@ -1,0 +1,16 @@
+{% extends parent_template|default:"logs/base_logs.html" %}
+
+{% block title %}
+{{ block.super }} -- Type Create
+{% endblock title %}
+
+
+{% block content %}
+<form action="{% url 'logs_type_create' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">
+    Create Type
+    </button>
+</form>
+{% endblock content %}
