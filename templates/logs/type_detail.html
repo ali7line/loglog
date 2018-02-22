@@ -9,7 +9,11 @@
 <a href="{% url 'logs_topic_create' %}"> + Add Topic </a>
 <ul>
 {% for topic in topics %}
-<li> <a href="{{ topic.get_absolute_url }}"> {{ topic.name }} </a> </li>
+<li> 
+    <a href="{{ topic.get_absolute_url }}"> {{ topic.name }} </a> - 
+    <a href="{{ topic.get_update_url }}"> Edit </a> -
+    <a href="{{ topic.get_delete_url }}"> Delete </a>
+</li>
 {% empty %}
 <li> <em> No Topic Found! </em> </li>
 {% endfor %}

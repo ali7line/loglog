@@ -1,0 +1,18 @@
+{% extends parent_template|default:"logs/base_logs.html" %}
+
+{% block title %}
+{{ block.super }} -- Delete Topic
+{% endblock title %}
+
+{% block content %}
+<form action="{{ topic.get_delete_url }}" method="POST">
+    {% csrf_token %}
+    <p>
+    Are you sure you want to delete "{{ topic.name }}"?
+    </p>
+    <a href="{{ topic.get_absolute_url }}"> Cancel </a>
+    <button type="submit">
+        Delete
+    </button>
+</form>
+{% endblock content %}

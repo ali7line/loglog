@@ -3,41 +3,43 @@ from django.views.generic import View
 
 from .models import Topic, Type
 from .forms import TopicForm, TypeForm, TopicAddEntryForm
+from .utils import ObjectListViewMixin, ObjectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
 
 
-class TopicList(View):
+########################
+# TOPIC
+########################
+class TopicList(ObjectListViewMixin, View):
     template_name = 'logs/topic_list.html'
     model = Topic
-
-    def get(self, request):
-        return render(request, self.template_name, {'topic_list': self.model.objects.all()})
 
 
 class TopicDetail(View):
     template_name = 'logs/topic_detail.html'
     model = Topic
 
-    def get(self, request, topic_slug):
-        topic = get_object_or_404(self.model, slug=topic_slug)
+    def get(self, request, slug):
+        topic = get_object_or_404(self.model, slug=slug)
         entries = topic.entry_set.all()
         context = {'topic': topic, 'entries': entries}
         return render(request, self.template_name, context)
 
 
-class TopicCreate(View):
+class TopicCreate(ObjectCreateMixin, View):
     template_name = 'logs/topic_create.html'
     form_class = TopicForm
 
-    def get(self, request):
-        return render(request, self.template_name, {'form': self.form_class()})
 
-    def post(self, request):
-        bound_form = self.form_class(request.POST)
-        if bound_form.is_valid():
-            new_topic = bound_form.save()
-            return redirect(new_topic)
-        else:
-            return render(request, self.template_name, {'form': bound_form})
+class TopicUpdate(ObjectUpdateMixin, View):
+    template_name = 'logs/topic_update.html'
+    form_class = TopicForm
+    model = Topic
+
+
+class TopicDelete(ObjectDeleteMixin, View):
+    template_name = 'logs/topic_delete.html'
+    model = Topic
+    success_url = '/topic/'
 
 
 class TopicAddEntry(View):
@@ -45,11 +47,11 @@ class TopicAddEntry(View):
     model = Topic
     form_class = TopicAddEntryForm
 
-    def get(self, request, topic_slug):
-        topic = get_object_or_404(self.model, slug=topic_slug)
+    def get(self, request, slug):
+        topic = get_object_or_404(self.model, slug=slug)
         return render(request, self.template_name, {'form': self.form_class(), 'topic': topic})
 
-    def post(self, request, topic_slug):
+    def post(self, request, slug):
         bound_form = self.form_class(request.POST)
         if bound_form.is_valid():
             new_topic = bound_form.save()
@@ -57,13 +59,14 @@ class TopicAddEntry(View):
         else:
             return render(request, self.template_name, {'form': bound_form})
 
+####################
+# TYPE
+###################
 
-class TypeList(View):
+
+class TypeList(ObjectListViewMixin, View):
     template_name = 'logs/type_list.html'
     model = Type
-
-    def get(self, request):
-        return render(request, self.template_name, {'type_list': self.model.objects.all()})
 
 
 class TypeDetail(View):
@@ -78,17 +81,14 @@ class TypeDetail(View):
         return render(request, self.template_name, context)
 
 
-class TypeCreate(View):
+class TypeCreate(ObjectCreateMixin, View):
     template_name = 'logs/type_create.html'
     form_model = TypeForm
 
-    def get(self, request):
-        return render(request, self.template_name, {'form': self.form_model()})
 
-    def post(self, request):
-        bounded_form = self.form_model(request.POST)
-        if bounded_form.is_valid():
-            new_type = bounded_form.save()
-            return redirect(new_type)
-        else:
-            return render(request, 'logs/type_create.html', {'form': bounded_form})
+class TypeUpdate(ObjectUpdateMixin, View):
+    pass
+
+
+class TypeDelete(ObjectDeleteMixin, View):
+    pass

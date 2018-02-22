@@ -1,4 +1,3 @@
-from django.shortcuts import redirect
 from django.urls import reverse
 from django.db import models
 
@@ -14,7 +13,13 @@ class Type(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('logs_type_detail', kwargs={'type_slug': self.slug})
+        return reverse('logs_type_detail', kwargs={'slug': self.slug})
+
+    def get_update_url(self):
+        return reverse('logs_type_update', kwargs={'slug': self.slug})
+
+    def get_delete_url(self):
+        return reverse('logs_type_delete', kwargs={'slug': self.slug})
 
 
 class Topic(models.Model):
@@ -43,7 +48,13 @@ class Topic(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('logs_topic_detail', kwargs={'topic_slug': self.slug})
+        return reverse('logs_topic_detail', kwargs={'slug': self.slug})
+
+    def get_update_url(self):
+        return reverse('logs_topic_update', kwargs={'slug': self.slug})
+
+    def get_delete_url(self):
+        return reverse('logs_topic_delete', kwargs={'slug': self.slug})
 
 
 class Entry(models.Model):
@@ -65,4 +76,4 @@ class Entry(models.Model):
         return "{}: {}".format(self.topic, short_text)
 
     def get_absolute_url(self):
-        return reverse('logs_topic_detail', kwargs={'topic_slug': self.topic.slug})
+        return reverse('logs_topic_detail', kwargs={'slug': self.topic.slug})
