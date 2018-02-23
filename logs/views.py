@@ -27,12 +27,12 @@ class TopicDetail(View):
 
 class TopicCreate(ObjectCreateMixin, View):
     template_name = 'logs/topic_create.html'
-    form_class = TopicForm
+    form_model = TopicForm
 
 
 class TopicUpdate(ObjectUpdateMixin, View):
     template_name = 'logs/topic_update.html'
-    form_class = TopicForm
+    form_model = TopicForm
     model = Topic
 
 
@@ -45,14 +45,14 @@ class TopicDelete(ObjectDeleteMixin, View):
 class TopicAddEntry(View):
     template_name = 'logs/topic_add_entry.html'
     model = Topic
-    form_class = TopicAddEntryForm
+    form_model = TopicAddEntryForm
 
     def get(self, request, slug):
         topic = get_object_or_404(self.model, slug=slug)
-        return render(request, self.template_name, {'form': self.form_class(), 'topic': topic})
+        return render(request, self.template_name, {'form': self.form_model(), 'topic': topic})
 
     def post(self, request, slug):
-        bound_form = self.form_class(request.POST)
+        bound_form = self.form_model(request.POST)
         if bound_form.is_valid():
             new_topic = bound_form.save()
             return redirect(new_topic)
@@ -62,8 +62,6 @@ class TopicAddEntry(View):
 ####################
 # TYPE
 ###################
-
-
 class TypeList(ObjectListViewMixin, View):
     template_name = 'logs/type_list.html'
     model = Type
@@ -73,8 +71,8 @@ class TypeDetail(View):
     template_name = 'logs/type_detail.html'
     model = Type
 
-    def get(self, request, type_slug):
-        type_ = get_object_or_404(self.model, slug=type_slug)
+    def get(self, request, slug):
+        type_ = get_object_or_404(self.model, slug=slug)
         topics = type_.topic_set.all()
         number = len(topics)
         context = {'type': type_, 'topics': topics, 'number': number}
@@ -87,8 +85,12 @@ class TypeCreate(ObjectCreateMixin, View):
 
 
 class TypeUpdate(ObjectUpdateMixin, View):
-    pass
+    template_name = 'logs/type_update.html'
+    model = Type
+    form_model = TypeForm
 
 
 class TypeDelete(ObjectDeleteMixin, View):
-    pass
+    template_name = 'logs/type_delete.html'
+    success_url = '/type/'
+    model = Type
