@@ -17,7 +17,7 @@
 <a href="{% url 'logs_topic_add_entry' topic.slug %}"> + Add Entry </a>
 </p>
 <ul>
-    {% for entry in entries %}
+    {% for entry in topic.entry_set.all %}
     <li> 
         <p>
         <time datetime="{{ entry.date_added|date:'Y-M-d' }}">{{ entry.date_added|date:'Y-M-d' }}</time>

@@ -8,7 +8,7 @@
 <h3>{{ type.name }}</h3>
 <a href="{% url 'logs_topic_create' %}"> + Add Topic </a>
 <ul>
-{% for topic in topics %}
+{% for topic in type.topic_set.all %}
 <li> 
     <a href="{{ topic.get_absolute_url }}"> {{ topic.name }} </a> - 
     <a href="{{ topic.get_update_url }}"> Edit </a> -
